@@ -44,12 +44,12 @@ class App extends React.Component {
       currentItem: {
         text: e.target.value,
         key: Date.now(),
-        type: e.target.type
+        type: e.target.value
       }
     });
   }
   handleChange(event) {
-    this.setState({ type: event.target.type });
+    this.setState({ value: event.target.value });
   }
   deleteItem(key) {
     const filteredItems = this.state.items.filter((item) => item.key !== key);
@@ -82,7 +82,10 @@ class App extends React.Component {
               onChange={this.handleInput}
             ></input>
             <label>
-              <select value={this.state.value} onChange={this.handleChange}>
+              <select
+                value={this.state.currentItem.type}
+                onChange={this.handleChange}
+              >
                 <option value="personal">Personal</option>
                 <option value="office">Office</option>
                 <option value="shopping">Shopping</option>
