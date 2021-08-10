@@ -17,7 +17,7 @@ class App extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.setUpdate = this.setUpdate.bind(this);
+
     this.handleChange = this.handleChange.bind(this);
   }
   addItem(e) {
@@ -37,19 +37,22 @@ class App extends React.Component {
     }
   }
   handleInput(e) {
+    e.preventDefault();
+    const { name, value } = e.target;
+    console.log(name);
+    console.log(value);
     this.setState({
-      currentItem: {
-        text: e.target.value,
-
-        key: Date.now()
-      }
+   //   ...items,
+      [name]: value,
     });
   }
+
   handleChange(e) {
-    //  this.setState({ value: event.target.value });
     this.setState({
       currentItem: {
-        type: e.target.value,
+        value: e.target.value,
+        name: e.target.name,
+
         key: Date.now()
         //type: e.target.value
       }
@@ -61,33 +64,22 @@ class App extends React.Component {
       items: filteredItems
     });
   }
-  setUpdate(text, type, key) {
-    console.log("items:" + this.state.items);
-    const items = this.state.items;
-    items.map((item) => {
-      if (item.key === key) {
-        console.log(item.key + "    " + key);
-        item.text = text;
-        item.type = type;
-      }
-    });
-    this.setState({
-      items: items
-    });
-  }
+
   render() {
     return (
       <div className="App">
         <header>
-          <form id="to-do-form" onSubmit={this.addItem}>
+          <form id="to-do-form" onSubmit={this.handleInput}>
             <input
               type="text"
+              name="text"
               placeholder="Enter task"
               value={this.state.currentItem.text}
-              onChange={this.handleInput}
+              onChange={this.handleChange}
             ></input>
             <label>
               <select
+                name="type"
                 value={this.state.currentItem.type}
                 onChange={this.handleChange}
               >
@@ -104,11 +96,7 @@ class App extends React.Component {
             {this.state.items.text} {this.state.items.type}{" "}
           </p>
 
-          <ListItems
-            items={this.state.items}
-            deleteItem={this.deleteItem}
-            setUpdate={this.setUpdate}
-          />
+          <ListItems items={this.state.items} deleteItem={this.deleteItem} />
         </header>
       </div>
     );
