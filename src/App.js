@@ -89,7 +89,7 @@ class App extends React.Component {
             <label>
               <select
                 value={this.state.currentItem.type}
-                onChange={this.handleInput}
+                onChange={this.handleChange}
               >
                 <option value="personal">Personal</option>
                 <option value="office">Office</option>

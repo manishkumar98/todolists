@@ -11,17 +11,17 @@ function ListItems(props) {
             type="text"
             id={item.key}
             value={item.text}
-            onChange={(e) => {
+            /*  onChange={(e) => {
               props.setUpdate(e.target.value, item.key);
-            }}
+            }}*/
           />
           <input
             type="text"
             id={item.key}
             value={item.type}
-            onChange={(e) => {
+            /*onChange={(e) => {
               props.setUpdate(e.target.value, item.key);
-            }}
+            }}*/
           />
           <span>
             <button
