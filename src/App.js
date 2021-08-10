@@ -1,11 +1,7 @@
 import React from "react";
 import "./App.css";
 import ListItems from "./ListItems";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-library.add(faTrash);
 
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +22,7 @@ class App extends React.Component {
   }
   addItem(e) {
     e.preventDefault();
+
     const newItem = this.state.currentItem;
     if (newItem.text !== "") {
       const items = [...this.state.items, newItem];
@@ -43,13 +40,20 @@ class App extends React.Component {
     this.setState({
       currentItem: {
         text: e.target.value,
-        key: Date.now(),
-        type: e.target.value
+
+        key: Date.now()
       }
     });
   }
-  handleChange(event) {
-    this.setState({ value: event.target.value });
+  handleChange(e) {
+    //  this.setState({ value: event.target.value });
+    this.setState({
+      currentItem: {
+        type: e.target.value,
+        key: Date.now()
+        //type: e.target.value
+      }
+    });
   }
   deleteItem(key) {
     const filteredItems = this.state.items.filter((item) => item.key !== key);
@@ -57,13 +61,14 @@ class App extends React.Component {
       items: filteredItems
     });
   }
-  setUpdate(text, key) {
+  setUpdate(text, type, key) {
     console.log("items:" + this.state.items);
     const items = this.state.items;
     items.map((item) => {
       if (item.key === key) {
         console.log(item.key + "    " + key);
         item.text = text;
+        item.type = type;
       }
     });
     this.setState({
@@ -84,14 +89,15 @@ class App extends React.Component {
             <label>
               <select
                 value={this.state.currentItem.type}
-                onChange={this.handleChange}
+                onChange={this.handleInput}
               >
                 <option value="personal">Personal</option>
                 <option value="office">Office</option>
                 <option value="shopping">Shopping</option>
               </select>
             </label>
-
+            {console.log(this.state.currentItem.text)}
+            {console.log(this.state.currentItem.type)}
             <button type="submit">Add</button>
           </form>
           <p>
