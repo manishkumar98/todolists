@@ -17,9 +17,16 @@ class App extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-
+    this.handleInputTask = this.handleInputTask.bind(this);
+    this.handleInputType = this.handleInputType.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateInput = this.updateInput.bind(this);
   }
+  updateInput(key, value) {
+    // update react state
+    this.setState({ [key]: value });
+  }
+
   addItem(e) {
     e.preventDefault();
 
@@ -42,11 +49,22 @@ class App extends React.Component {
     console.log(name);
     console.log(value);
     this.setState({
-   //   ...items,
-      [name]: value,
+      //...items,
+      [e.target.name]: e.target.value
     });
   }
-
+  handleInputTask = (e) => {
+    e.preventDefault();
+    this.setState({
+      text: e.target.value
+    });
+  };
+  handleInputType = (e) => {
+    e.preventDefault();
+    this.setState({
+      type: e.target.value
+    });
+  };
   handleChange(e) {
     this.setState({
       currentItem: {
@@ -75,13 +93,13 @@ class App extends React.Component {
               name="text"
               placeholder="Enter task"
               value={this.state.currentItem.text}
-              onChange={this.handleChange}
+              onChange={(e) => this.updateInput("newItem", e.target.value)}
             ></input>
             <label>
               <select
                 name="type"
                 value={this.state.currentItem.type}
-                onChange={this.handleChange}
+                onChange={(e) => this.updateInput("newItem", e.target.value)}
               >
                 <option value="personal">Personal</option>
                 <option value="office">Office</option>
